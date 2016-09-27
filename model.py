@@ -28,7 +28,7 @@ encoder.fit(Y)
 encoded_Y = encoder.transform(Y)
 
 # to_categorical converts the numbered labels into a one-hot vector
-dummy_Y = np_utils.to_categorical(encoded_Y)
+dummy_y = np_utils.to_categorical(encoded_Y)
 
 def baseline_model():
     model = Sequential()
@@ -38,4 +38,8 @@ def baseline_model():
 
     return model
 
-baseline_model()
+estimator = KerasClassifier(build_fn=baseline_model, nb_epoch=200, batch_size=5, verbose=0)
+
+kfold = KFold(n=len(X), n_folds=10, shuffle=True, random_state=0)
+results = cross_val_score(estimator, X, dummy_y, cv=kfold)
+print("Baseline: %.2f%% (%.2f%%)" % (results.mean()*100, results.std()*100))
