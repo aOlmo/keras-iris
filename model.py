@@ -16,3 +16,17 @@ dataset     = dataframe.values
 
 X = dataset[:,0:4].astype(float)
 Y = dataset[:,4]
+
+# Preprocess the labels
+
+# LabelEncoder from scikit-learn turns each text label
+# (e.g "Iris-setosa", "Iris-versicolor") into a vector
+# In this case, each of the three labels are just assigned
+# a number from 0-2.
+encoder = LabelEncoder()
+encoder.fit(Y)
+encoded_Y = encoder.transform(Y)
+
+# to_categorical converts the numbered labels into a one-hot vector
+dummy_Y = np_utils.to_categorical(encoded_Y)
+
