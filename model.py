@@ -8,3 +8,11 @@ from sklearn.cross_validation import cross_val_score
 from sklearn.cross_validation import KFold
 from sklearn.preprocessing import LabelEncoder
 from sklearn.pipeline import Pipeline
+
+numpy.random.seed(0)
+
+dataframe   = pandas.read_csv("iris.csv", header=None)
+dataset     = dataframe.values
+
+X = dataset[:,0:4].astype(float)
+Y = dataset[:,4]
