@@ -10,6 +10,7 @@ from sklearn.pipeline import Pipeline
 
 from sklearn.model_selection import train_test_split
 
+import matplotlib.pyplot as plt
 import os
 
 weights_name = "weights.hdf5"
@@ -45,16 +46,21 @@ model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accur
 
 model.summary()
 
-if not os.path.isfile(weights_name):
-  model.fit(X_train, y_train, epochs=200, batch_size=5)
-  model.save_weights(weights_name)
-else:
-  model.load_weights(weights_name)
+history = model.fit(X_train, y_train, epochs=200,
+                    batch_size=5)
+model.save_weights(weights_name)
 
 # Explicar qué es cross validation
-# Crear una grafica aquí
-# from sklearn.cross_validation import cross_val_score
-# from sklearn.cross_validation import KFold
+
+# list all data in history
+# summarize history for accuracy
+plt.plot(history.history['acc'])
+plt.plot(history.history['loss'])
+plt.title('model accuracy')
+plt.ylabel('accuracy')
+plt.xlabel('Loss')
+plt.legend(['Accuracy', 'Loss'], loc='upper left')
+plt.show()
 
 # model.predict()
 
